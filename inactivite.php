@@ -2,15 +2,15 @@
 
 	if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 
-	global $db;
-	$nom_table= "ogspy_inactivite";
+	global $db,$table_prefix;
+	$nom_table= $table_prefix."inactivite";
 	//**********************************************************************************************************
 	//on recupere la liste des inactifs de la table pour enlever les joueurs qui ne jouent plus, ou qui ne sont plus inactif
 	//**********************************************************************************************************
 	
 	//etape 1 suppression des joueurs delete
 	$request_ogspy_universe = "SELECT distinct inactivite_nom ".
-							  "FROM ogspy_inactivite ".
+							  "FROM ".$nom_table." ".
 							  "WHERE inactivite_nom not in ( select distinct player from ".TABLE_UNIVERSE." );";
 								
 	$result_ogspy_universe = $db->sql_query($request_ogspy_universe);

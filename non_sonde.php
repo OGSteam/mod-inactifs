@@ -2,7 +2,7 @@
 
 	if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 	
-	global $db;
+	global $db , $table_prefix ;
 	
 	if(isset($pub_order_by)) $order_by = $pub_order_by;
 	else $order_by = 1;
@@ -11,10 +11,10 @@
 	else $sens = 1;
 	
 	$request_ogspy_universe_inactif = "SELECT galaxy,system,row,lower(player)
-										FROM ogspy_universe
+										FROM ". TABLE_UNIVERSE ."
 										where (status = 'i')
 										and CONCAT(`galaxy`,':',`system`,':',`row`) not in
-										(select coordinates from ogspy_parsedspy)";
+										(select coordinates from ". TABLE_PARSEDSPY .")";
 	if( $order_by == 1 && $sens == 1)	$request_ogspy_universe_inactif .= "order by galaxy desc, system desc, row desc;";
 	if( $order_by == 1 && $sens == 2)	$request_ogspy_universe_inactif .= "order by galaxy asc, system asc, row asc;";
 				
@@ -25,7 +25,7 @@
 	$ttttttttt = time();
 	while(list($galaxy,$system,$row,$player)=$db->sql_fetch_row($result_ogspy_universe_inactif)){
 	
-		$request_ogspy_inactif = "select inactivite_date from ogspy_inactivite where inactivite_nom like '$player' limit 1";
+		$request_ogspy_inactif = "select inactivite_date from ".$table_prefix."inactivite where inactivite_nom like '$player' limit 1";
 		$result_ogspy_inactif = $db->sql_query($request_ogspy_inactif);
 		list($inactivite_date) = mysql_fetch_row( $result_ogspy_inactif );
 		if($inactivite_date > 0)

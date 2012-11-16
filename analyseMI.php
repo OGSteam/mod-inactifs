@@ -6,7 +6,7 @@
 	//rajouter vitesse univers			
 	//requete V3
 	$request_ogspy_universe_inactif = "SELECT coordinates, max(datere),energie, M, C, D, lower(player)
-										FROM ogspy_parsedspy, ".TABLE_UNIVERSE."
+										FROM ".TABLE_PARSEDSPY.", ".TABLE_UNIVERSE."
 										where `coordinates`=CONCAT(`galaxy`,':',`system`,':',`row`)
 										and (status = 'i')
 										and M > 1
