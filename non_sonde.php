@@ -2,22 +2,30 @@
 
 	if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 	
-	global $db , $table_prefix ;
-	
+	global $db , $table_prefix , $g_max;
+
+     // global $pub_ , $pub_g_min , $pub_s_min , $pub_s_max ,$server_config , $pub_subaction , $pub_action;
+     
 	if(isset($pub_order_by)) $order_by = $pub_order_by;
 	else $order_by = 1;
 	
 	if(isset($pub_sens)) $sens = $pub_sens;
 	else $sens = 1;
+    
+    
+    
+     $value = array() ;
+     $value = tab_recherche() ;
+     
 	
 	$request_ogspy_universe_inactif = "SELECT galaxy,system,row,lower(player)
 										FROM ". TABLE_UNIVERSE ."
-										where (status = 'i')
+										where (status = 'i') and galaxy <= ".$value["g_max"]." and galaxy >= ".$value["g_min"]."  and system >= ".$value["s_min"]."  and system <= ".$value["s_max"]."  
 										and CONCAT(`galaxy`,':',`system`,':',`row`) not in
-										(select coordinates from ". TABLE_PARSEDSPY .")";
+										(select coordinates from ". TABLE_PARSEDSPY ." where dateRE > ".since($value["since"])." )";
 	if( $order_by == 1 && $sens == 1)	$request_ogspy_universe_inactif .= "order by galaxy desc, system desc, row desc;";
 	if( $order_by == 1 && $sens == 2)	$request_ogspy_universe_inactif .= "order by galaxy asc, system asc, row asc;";
-				
+	//	var_dump($request_ogspy_universe_inactif);		
 	$result_ogspy_universe_inactif = $db->sql_query($request_ogspy_universe_inactif);
 	
 	$tab_player = array();
@@ -54,7 +62,11 @@
 		if($sens == 2 && $order_by <> 1)	 asort($a, $sort_by);
 	}
 	//---------------------------------------
-	
+
+     echo $value["html"];
+    
+
+     
 	$link ="index.php?action=".ACTION."&subaction=non_sonde";
 	echo "<table cellpudding=0 cellspacing=0 border=1>";
 	echo "<tr><th><a href='".$link."&order_by=0&sens=1'><img src='images/asc.png'></a>  Nom  <a href='".$link."&order_by=0&sens=2'><img src='images/desc.png'></a></th>
@@ -76,4 +88,5 @@
 		}
 	}
 	echo "</table>";
+    	
 ?>
