@@ -17,6 +17,66 @@
 		list($version)=$db->sql_fetch_row($result);
 		echo "<br/><B>analyseI v$version</B> - benneb&copy;2010<br/>";
 	}
+		function since($timestamp){
+	$now = time();
+    $since = (int)($timestamp * 24 *60 *60) ;
+    $difference = (int) ($now - $since);
+    return $difference;
+	}
+    // retourn le tableau de recherche utilisable sur toutes les pages
+    function tab_recherche(){
+        global $pub_g_max , $pub_g_min , $pub_s_min , $pub_s_max ,$server_config , $pub_subaction , $pub_since ,$pub_action;
+    
+    if(isset($pub_g_max)) $g_max = (int)$pub_g_max;
+	else $g_max = $server_config['num_of_galaxies']; 
+    if(isset($pub_g_min)) $g_min = (int)$pub_g_min;
+	else $g_min = $server_config['num_of_galaxies']; 
+	if(isset($pub_s_max)) $s_max = (int)$pub_s_max;
+	else $s_max = $server_config['num_of_systems']; 
+    if(isset($pub_s_min)) $s_min = (int)$pub_s_min;
+	else $s_min = $server_config['num_of_systems']; 
+	if(isset($pub_since)) $since = (int)$pub_since;
+	else $since = 30;
+   
+    
+	$retour = '';
+    $retour .= ' <table width="100%">';
+    $retour .= '<form method="POST" action="index.php?action='.$pub_action.'&subaction='.$pub_subaction.'">';
+    $retour .= '<input type="hidden" name="t" value="t">';
+    $retour .= '<tbody><tr>';
+    $retour .= '<td class="c_recherche" colspan="4">Recherche Secteur</td>';
+    $retour .= '</tr>';
+    $retour .= '<tr><th colspan="2"></th><th>Minimum</th><th>Maximum</th></tr><tr><th>&nbsp;</th>';
+    $retour .= '<th>Galaxie</th>';
+    $retour .= '<th><input name="g_min" type="text" maxlength="2" size="3" value="'.$g_min.'"></th>';
+    $retour .= '<th><input name="g_max" type="text" maxlength="2" size="3" value="'.$g_max.'"></th>';
+    $retour .= '</tr>';
+    $retour .= '<tr>';
+    $retour .= '<th>&nbsp;</th>';
+    $retour .= '<th>Système solaire</th>';
+    $retour .= '<th><input name="s_min" type="text" maxlength="3" size="3" value="'.$s_min.'"></th>';
+    $retour .= '<th><input name="s_max" type="text" maxlength="3" size="3" value="'.$s_max.'"></th>';
+    $retour .= '</tr>';
+    $retour .= '<th>Non scanné depuis</th>';
+    $retour .= '<th><input name="since" type="text" maxlength="3" size="3" value="'.$since.'"> jour(s)</th>';
+    $retour .= '<th> </th><th> </th>';
+    $retour .= '</tr>';
+    $retour .= '';
+    $retour .= '<tr><th colspan="4"><input type="submit" value="Chercher"></th>		</tr></tbody></form></table><br />';
+  
+   $tab_retour = array();
+   $tab_retour["html"]=$retour;
+   $tab_retour["g_max"]=$g_max;
+   $tab_retour["g_min"]=$g_min;
+   $tab_retour["s_max"]=$s_max;
+   $tab_retour["s_min"]=$s_min;
+    $tab_retour["since"]=$since;
+
+	
+    return $tab_retour ;
+    
+    
+	}
 	function preparationTri($tab_player, $nb_colonne){
 	
 		$tabAlgo = array();
@@ -89,7 +149,9 @@
 	echo $menulabel4."</a></th>";
 	
 	echo "</tr></table>";
+    
 	
+     
 	    //On  affiche de la page demandée
 	    if ($pub_subaction == $menu1) include("$menu1.php");
 	elseif ($pub_subaction == $menu2) include("$menu2.php");
@@ -97,6 +159,10 @@
 	elseif ($pub_subaction == $menu4) include("$menu4.php");
 	//Si la page a afficher n'est pas définie, on affiche la première
 	else include("$menu1.php");
+    
+    
+   
+    
 	
 	//ecriture dans les logs lors de l'utilisation du mod
 	$line = "[mod] ".$user_data['user_name']." consulte le module ".ACTION;
