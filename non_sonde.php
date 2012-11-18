@@ -2,7 +2,7 @@
 
 	if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 	
-	global $db , $table_prefix , $g_max;
+	global $db , $table_prefix ;
 
      // global $pub_ , $pub_g_min , $pub_s_min , $pub_s_max ,$server_config , $pub_subaction , $pub_action;
      
