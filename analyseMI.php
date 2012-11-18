@@ -3,12 +3,18 @@
 	if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 
 	global $db, $prefixe;
+    
+    
+     $value = array() ;
+     $value = tab_recherche() ;
+     
 	//rajouter vitesse univers			
 	//requete V3
 	$request_ogspy_universe_inactif = "SELECT coordinates, max(datere),energie, M, C, D, lower(player)
 										FROM ".TABLE_PARSEDSPY.", ".TABLE_UNIVERSE."
 										where `coordinates`=CONCAT(`galaxy`,':',`system`,':',`row`)
-										and (status = 'i')
+										and (status = 'i') and galaxy <= ".$value["g_max"]." and galaxy >= ".$value["g_min"]."  and system >= ".$value["s_min"]."  and system <= ".$value["s_max"]." 
+                                        and dateRE > ".since($value["since"])."
 										and M > 1
 										group by coordinates";
 
@@ -53,9 +59,10 @@
 		if($sens == 2)	asort($a, $sort_by);
 	}
 	//---------------------------------------
-	
+	  echo $value["html"];
+      
 	echo "<table cellpudding=0 cellspacing=0 border=1>";
-	$link ="index.php?action=".ACTION."&subaction=analyseMI";
+	$link ="index.php?action=".ACTION."&subaction=analyseMI&since=".$value["since"]."&g_max=".$value["g_max"]."&g_min=".$value["g_min"]."&s_max=".$value["s_max"]."&s_min=".$value["s_min"]."";
 
 	echo "<tr><th><a href='".$link."&order_by=0&sens=1'><img src='".$prefixe."images/asc.png'></a>  Nom  <a href='".$link."&order_by=0&sens=2'><img src='".$prefixe."images/desc.png'></a></th>";
 		if(UNITROUVE)	echo "<th>War riders</th>";
@@ -74,8 +81,9 @@
 				echo "<tr>";
 				echo "<td><a href='".SEARCH.$tabAlgo[0][$k]."&strict=on'>".$tabAlgo[0][$k]."</a></td>";
 				if(UNITROUVE)	echo "<td><a href='".WARRIDERS.$tabAlgo[0][$k]."'>".$tabAlgo[0][$k]."</a></td>";
-				echo "<td><a href='index.php?action=show_reportspy&galaxy=".$coords[0]."&system=".$coords[1]."&row=".$coords[2]."'>".$tabAlgo[1][$k]."</a></td>";
-				echo "<td style='text-align:center;'>".$tabAlgo[2][$k]."</td>";
+				//echo "<td><a href='index.php?action=show_reportspy&galaxy=".$coords[0]."&system=".$coords[1]."&row=".$coords[2]."'>".$tabAlgo[1][$k]."</a></td>";
+				echo "<td><a href=\"#\" onclick=\"window.open('index.php?action=show_reportspy&amp;galaxy=".$coords[0]."&amp;system=".$coords[1]."&amp;row=".$coords[2]."','_blank','width=640, height=480, toolbar=0, location=0, directories=0, status=0, scrollbars=1, resizable=1, copyhistory=0, menuBar=0');return(false)\">".$tabAlgo[1][$k]."</a></td>";
+                echo "<td style='text-align:center;'>".$tabAlgo[2][$k]."</td>";
 				echo "<td style='text-align:center;'>".$tabAlgo[3][$k]."</td>";
 				echo "<td style='text-align:center;'>".$tabAlgo[4][$k]."</td>";
 				echo "<td style='text-align:center;'>".$tabAlgo[5][$k]."</td>";
