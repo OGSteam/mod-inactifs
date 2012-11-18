@@ -64,11 +64,11 @@
 	//---------------------------------------
 
      echo $value["html"];
-    
 
      
-	$link ="index.php?action=".ACTION."&subaction=non_sonde";
-	echo "<table cellpudding=0 cellspacing=0 border=1>";
+	$link ="index.php?action=".ACTION."&subaction=non_sonde&since=".$value["since"]."&g_max=".$value["g_max"]."&g_min=".$value["g_min"]."&s_max=".$value["s_max"]."&s_min=".$value["s_min"]."";
+	
+    echo "<table cellpudding=0 cellspacing=0 border=1>";
 	echo "<tr><th><a href='".$link."&order_by=0&sens=1'><img src='images/asc.png'></a>  Nom  <a href='".$link."&order_by=0&sens=2'><img src='images/desc.png'></a></th>
 		       <th><a href='".$link."&order_by=1&sens=1'><img src='images/asc.png'></a>  Coord  <a href='".$link."&order_by=1&sens=2'><img src='images/desc.png'></a></th>
 			  <th><a href='".$link."&order_by=2&sens=1'><img src='images/asc.png'></a>  nb jours  ".help("inactif_nbjours")."<a href='".$link."&order_by=2&sens=2'><img src='images/desc.png'></a></th>
