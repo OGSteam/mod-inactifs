@@ -53,11 +53,11 @@
     $retour .= '</tr>';
     $retour .= '<tr>';
     $retour .= '<th>&nbsp;</th>';
-    $retour .= '<th>Système solaire</th>';
+    $retour .= '<th>Syst&egrave;me solaire</th>';
     $retour .= '<th><input name="s_min" type="text" maxlength="3" size="3" value="'.$s_min.'"></th>';
     $retour .= '<th><input name="s_max" type="text" maxlength="3" size="3" value="'.$s_max.'"></th>';
     $retour .= '</tr>';
-    $retour .= '<th>Non scanné depuis</th>';
+    $retour .= '<th>Non scann&eacute; depuis</th>';
     $retour .= '<th><input name="since" type="text" maxlength="3" size="3" value="'.$since.'"> jour(s)</th>';
     $retour .= '<th> </th><th> </th>';
     $retour .= '</tr>';

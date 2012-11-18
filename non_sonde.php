@@ -51,7 +51,7 @@
 	$nb_colonne = 3;
 	
 	//--------------------------------------
-	//algorithme de tri sur la colonne n° order_by
+	//algorithme de tri sur la colonne nÂ° order_by
 	$tabAlgo = array();
 	$sort_by = SORT_REGULAR;
 	$tabAlgo = preparationTri($tab_player, $nb_colonne);
