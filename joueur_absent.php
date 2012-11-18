@@ -39,10 +39,11 @@
 		$dernier_classement_point_trouve = 0;
 		$dernier_classement_vaisseaux_trouve = 0;
 		foreach($r as $d => $v){
+		 
 		
 			$madate = ($d!=0) ? $d : '-' ;
 			$point_general  = (isset($v['general']) && isset($v['general']['points'])) ? $v['general']['points']  :  '' ;
-			$point_vaisseaux =  (isset($v['fleet']) && isset($v['fleet']['points']))? $v['fleet']['points'] : '';
+			$point_vaisseaux =  (isset($v['military']) && isset($v['military']['points']))? $v['military']['points'] : '';
 			
 			//stocker la premiere date de l'iteration
 			if (!$mark)
@@ -139,7 +140,7 @@
 		if(UNITROUVE) echo "<th>War riders</th>";
 		
 	echo "<th><a href='".$link."&order_by=1&sens=1'><img src='".$prefixe."images/asc.png'></a>  Points  <a href='".$link."&order_by=1&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
-		  <th><a href='".$link."&order_by=2&sens=1'><img src='".$prefixe."images/asc.png'></a>  Vaisseaux  <a href='".$link."&order_by=2&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
+		  <th><a href='".$link."&order_by=2&sens=1'><img src='".$prefixe."images/asc.png'></a>  Militaire  <a href='".$link."&order_by=2&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
 		  <th><a href='".$link."&order_by=3&sens=1'><img src='".$prefixe."images/asc.png'></a>  Progression  ".help("joueur_absent_progression")."<a href='".$link."&order_by=3&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
 		</tr>";
 		
