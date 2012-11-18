@@ -3,7 +3,10 @@
 	if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 
 	global $db, $prefixe;
-
+    
+     $value = array() ;
+     $value = tab_recherche() ;
+     
 	if(isset($pub_nbjours)) $nb_jour_inactif = $pub_nbjours;
 	else $nb_jour_inactif = 3;
 	$nb_jour_inactif_sec = $nb_jour_inactif * 24*60*60;
@@ -12,6 +15,7 @@
 									"not(status like '%v%') ".
 									"and not (status like '%i%') ".
 									"and not (status like '%d%') ".
+                                    "and galaxy <= ".$value["g_max"]." and galaxy >= ".$value["g_min"]."  and system >= ".$value["s_min"]."  and system <= ".$value["s_max"]." ". 
 									"and not(player = '');";
 				
 	$result_ogspy_universe_inactif = $db->sql_query($request_ogspy_universe_inactif);
@@ -110,6 +114,10 @@
 	}
 	//---------------------------------------
 	
+    
+      echo $value["html"];
+      
+      
 	$link ="index.php?action=".ACTION."&subaction=joueur_absent&order_by=$order_by&sens=$sens";
 
 	//en reglant à 0 ou 1 ce mod s apparente à un top flop journalier";
