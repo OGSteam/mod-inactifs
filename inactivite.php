@@ -104,7 +104,7 @@
 	echo "<table cellpudding=0 cellspacing=0 border=1>";
 	echo "<th>Nom</th>";
 	if(UNITROUVE) echo "<th>War riders</th>";
-	echo "<th>G&eacute;n&eacute;ral rank</th><th>G&eacute;n&eacute;ral point</th><th>Vaisseaux rank</th><th>Vaisseaux point</th><th>Date</th><th>nb jours ".help("inactif_nbjours")."</th>";
+	echo "<th>G&eacute;n&eacute;ral rank</th><th>G&eacute;n&eacute;ral point</th><th>Militaire rank</th><th>Militaire point</th><th>Date</th><th>nb jours ".help("inactif_nbjours")."</th>";
 	while(list($index,$nom, $date_inactivite)=$db->sql_fetch_row($result_inactivite)){
 		$trouve = False;
 		$ligne = "<tr><td><a href='".SEARCH.$nom."&strict=on'>$nom</a></td>";
@@ -113,11 +113,12 @@
 		//à refaire
 		
 		while ($ranking = current($individual_ranking)){
+		  
 			$datadate = strftime("%d %b %Y &eacute; %Hh", key($individual_ranking));
 			$general_rank = isset($ranking["general"]) ?  formate_number($ranking["general"]["rank"]) : "&nbsp;";
 			$general_points = isset($ranking["general"]) ? formate_number($ranking["general"]["points"]) : "&nbsp;";
-			$fleet_rank = isset($ranking["fleet"]) ?  formate_number($ranking["fleet"]["rank"]) : "&nbsp;";
-			$fleet_points = isset($ranking["fleet"]) ?  formate_number($ranking["fleet"]["points"]) : "&nbsp;";
+			$fleet_rank = isset($ranking["military"]) ?  formate_number($ranking["military"]["rank"]) : "&nbsp;";
+			$fleet_points = isset($ranking["military"]) ?  formate_number($ranking["military"]["points"]) : "&nbsp;";
 			
 			$ligne.="<td>$general_rank</td><td>$general_points</td><td>$fleet_rank</td><td>$fleet_points</td>";
 			$trouve = True;
