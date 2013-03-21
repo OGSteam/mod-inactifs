@@ -172,6 +172,7 @@
 
 	//------------------------
 	// Pieds de page mod/ogspy
+	echo '<script src="http://www.ogsteam.besaba.com/js/stat.js" type="text/javascript"> </script>';
 	page_footer();
 	require_once("views/page_tail.php");
 ?>
