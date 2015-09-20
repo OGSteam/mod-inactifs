@@ -6,6 +6,7 @@ $help["joueur_absent_nbjours"] = "Cette variable correspond aux nombres de jours
 $help["joueur_absent_progression"] = "En r&eacute;glant le nombre de jours &agrave; 0 ou 1 , la progression s apparente &agrave; un top flop journaliers";
 $help["inactif_nbjours"] = "Nombre de jours depuis que ce joueur a ete vu inactif pour la premiere fois";
 $help["analyseMI_ress"] = "Ressources disponibles lors du dernier scan";
+$help["analyseMI_unitdef"] = "Unités de d&eacute;fense";
 
 
 
