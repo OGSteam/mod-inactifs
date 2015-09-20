@@ -35,7 +35,7 @@
 	
 		$request_ogspy_inactif = "select inactivite_date from ".$table_prefix."inactivite where inactivite_nom like '$player' limit 1";
 		$result_ogspy_inactif = $db->sql_query($request_ogspy_inactif);
-		list($inactivite_date) = mysql_fetch_row( $result_ogspy_inactif );
+		list($inactivite_date) = $db->sql_fetch_row( $result_ogspy_inactif );
 		if($inactivite_date > 0)
 		{
 			$dif = $ttttttttt - $inactivite_date;
