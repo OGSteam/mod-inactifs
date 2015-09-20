@@ -11,39 +11,19 @@
 	//rajouter vitesse univers			
 	//requete V3
      
-     $sub_request = ""; // uniquemen t si on demande des I sans moyen de defense
-     if (isset($pub_notdef))
-     {
-     	$sub_request = " and LM 	= 0
-     	and LLE 	= 0
-     	and LLO 	= 0
-     	and CG 	= 0
-     	and AI 	= 0
-     	and LP 	= 0
-     	and PT 	= 0
-     	and GT 	= 0
-     	and CLE 	= 0
-     	and CLO 	= 0
-     	and CR 	= 0
-     	and VB 	= 0
-     	and VC 	= 0
-     	and REC 	= 0
-     	and BMD 	= 0
-     	and DST 	= 0
-     	and EDLM 	= 0
-     	and TRA 	= 0 ";
-     
-     }
-     
+
+     	$sub_request = " , 
+     	( LM + LLE + LLO+ CG+ AI+ LP+ GT+ PT+ CLE+ CLO+ CR+ VB+ VC+ REC+ BMD+ DST+ EDLM+ TRA) AS totaldef      	";
+
       
      
-	$request_ogspy_universe_inactif = "SELECT coordinates, max(datere),energie, M, C, D, lower(player) , metal , cristal , deuterium 
+	$request_ogspy_universe_inactif = "SELECT coordinates, max(datere),energie, M, C, D, lower(player) , metal , cristal , deuterium 	".$sub_request." 
 										FROM ".TABLE_PARSEDSPY.", ".TABLE_UNIVERSE."
 										where `coordinates`=CONCAT(`galaxy`,':',`system`,':',`row`)
 										and (status = 'i') and galaxy <= ".$value["g_max"]." and galaxy >= ".$value["g_min"]."  and system >= ".$value["s_min"]."  and system <= ".$value["s_max"]." 
                                         and dateRE > ".since($value["since"])."
 										and M > 1
-										".$sub_request." 
+									
 										group by coordinates";
 
 				
@@ -51,7 +31,7 @@
 	$tab_player = array();
 	$index_tab = 0;
 	
-	while(list($coordinates, $datere ,$energie, $M, $C, $D, $player , $metal , $cristal , $deuterium )=$db->sql_fetch_row($result_ogspy_universe_inactif)){
+	while(list($coordinates, $datere ,$energie, $M, $C, $D, $player , $metal , $cristal , $deuterium ,$totaldef)=$db->sql_fetch_row($result_ogspy_universe_inactif)){
 
 		//température moyenne
 		$temperature = 60;
@@ -66,11 +46,11 @@
 		{
 			$prod_pt = $prod_pt * $server_config['speed_uni'];
 		}
-		$tab_player[$index_tab] = "$player|$coordinates|$M|$C|$D|$prod_pt|$metal|$cristal|$deuterium|$total";
+		$tab_player[$index_tab] = "$player|$coordinates|$M|$C|$D|$prod_pt|$metal|$cristal|$deuterium|$total|$totaldef";
 		$index_tab++;
 	}	
 	
-	$nb_colonne = 10;
+	$nb_colonne = 11;
 	if(isset($pub_order_by)) $order_by = $pub_order_by;
 	else $order_by = 2;
 
@@ -100,10 +80,11 @@
 			  <th><a href='".$link."&order_by=3&sens=1'><img src='".$prefixe."images/asc.png'></a>  C  <a href='".$link."&order_by=3&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
 			  <th><a href='".$link."&order_by=4&sens=1'><img src='".$prefixe."images/asc.png'></a>  D  <a href='".$link."&order_by=4&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
 			  <th><a href='".$link."&order_by=5&sens=1'><img src='".$prefixe."images/asc.png'></a>  PT/jour ".help("analyseMI_pt")." <a href='".$link."&order_by=5&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
-			  <th><a href='".$link."&order_by=6&sens=1'><img src='".$prefixe."images/asc.png'></a>  Metal  ".help("analyseMI_ress")." <a href='".$link."&order_by=5&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
-			  <th><a href='".$link."&order_by=7&sens=1'><img src='".$prefixe."images/asc.png'></a>  Cristal ".help("analyseMI_ress")." <a href='".$link."&order_by=5&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
-			  <th><a href='".$link."&order_by=8&sens=1'><img src='".$prefixe."images/asc.png'></a>  Deuterium  ".help("analyseMI_ress")." <a href='".$link."&order_by=5&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
-			  <th><a href='".$link."&order_by=9&sens=1'><img src='".$prefixe."images/asc.png'></a>  Total  ".help("analyseMI_ress")." <a href='".$link."&order_by=5&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
+			  <th><a href='".$link."&order_by=6&sens=1'><img src='".$prefixe."images/asc.png'></a>  Metal  ".help("analyseMI_ress")." <a href='".$link."&order_by=6&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
+			  <th><a href='".$link."&order_by=7&sens=1'><img src='".$prefixe."images/asc.png'></a>  Cristal ".help("analyseMI_ress")." <a href='".$link."&order_by=7&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
+			  <th><a href='".$link."&order_by=8&sens=1'><img src='".$prefixe."images/asc.png'></a>  Deuterium  ".help("analyseMI_ress")." <a href='".$link."&order_by=8&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
+			  <th><a href='".$link."&order_by=9&sens=1'><img src='".$prefixe."images/asc.png'></a>  Total  ".help("analyseMI_ress")." <a href='".$link."&order_by=9&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
+			  <th><a href='".$link."&order_by=10&sens=1'><img src='".$prefixe."images/asc.png'></a>  Total defense  ".help("analyseMI_unitdef")." <a href='".$link."&order_by=10&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
 			  
 		</tr>";
 		
@@ -125,11 +106,12 @@
 				echo "<td style='text-align:center;'>".number_format($tabAlgo[7][$k],0, ',', '.') ."</td>";
 				echo "<td style='text-align:center;'>".number_format($tabAlgo[8][$k],0, ',', '.') ."</td>";
 				echo "<td style='text-align:center;'>".number_format($tabAlgo[9][$k],0, ',', '.') ."</td>";
+				echo "<td style='text-align:center;'>".number_format($tabAlgo[10][$k],0, ',', '.') ."</td>";
 				echo "</tr>";
 		}
 	}
 	echo "</table>";
-	var_dump($pub_notdef);
+
 ?>
 
 

@@ -61,7 +61,7 @@
     if ($pub_subaction=="analyseMI")
     {
      $retour .= "<th>Sans d&eacute;fense</th><th><input type=\"checkbox\" ";
-     if (isset($_POST['notdef']))
+     if (isset($_POST['notdef']) || isset($_GET['notdef']))
      {
      	$retour .= " checked ";
      }
