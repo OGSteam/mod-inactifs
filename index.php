@@ -38,7 +38,6 @@
 	if(isset($pub_since)) $since = (int)$pub_since;
 	else $since = 30;
    
-    
 	$retour = '';
     $retour .= ' <table width="100%">';
     $retour .= '<form method="POST" action="index.php?action='.$pub_action.'&subaction='.$pub_subaction.'">';
@@ -59,7 +58,20 @@
     $retour .= '</tr>';
     $retour .= '<th>Non scann&eacute; depuis</th>';
     $retour .= '<th><input name="since" type="text" maxlength="3" size="3" value="'.$since.'"> jour(s)</th>';
-    $retour .= '<th> </th><th> </th>';
+    if ($pub_subaction=="analyseMI")
+    {
+     $retour .= "<th>Sans d&eacute;fense</th><th><input type=\"checkbox\" ";
+     if (isset($_POST['notdef']))
+     {
+     	$retour .= " checked ";
+     }
+   	 $retour .= " name=\"notdef\" value=\"notdef\"></th> ";
+    }
+    else
+    {
+    	    $retour .= '<th> </th><th> </th>';
+    }
+
     $retour .= '</tr>';
     $retour .= '';
     $retour .= '<tr><th colspan="4"><input type="submit" value="Chercher"></th>		</tr></tbody></form></table><br />';
@@ -170,9 +182,8 @@
 	$line = "/*".date("d/m/Y H:i:s").'*/ '.$line;
 	write_file(PATH_LOG_TODAY.$fichier, "a", $line);
 
-	//------------------------
-	// Pieds de page mod/ogspy
-	echo '<script src="http://www.ogsteam.besaba.com/js/stat.js" type="text/javascript"> </script>';
+
+	
 	page_footer();
 	require_once("views/page_tail.php");
 ?>
