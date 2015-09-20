@@ -10,12 +10,40 @@
      
 	//rajouter vitesse univers			
 	//requete V3
+     
+     $sub_request = ""; // uniquemen t si on demande des I sans moyen de defense
+     if (isset($pub_notdef))
+     {
+     	$sub_request = " and LM 	= 0
+     	and LLE 	= 0
+     	and LLO 	= 0
+     	and CG 	= 0
+     	and AI 	= 0
+     	and LP 	= 0
+     	and PT 	= 0
+     	and GT 	= 0
+     	and CLE 	= 0
+     	and CLO 	= 0
+     	and CR 	= 0
+     	and VB 	= 0
+     	and VC 	= 0
+     	and REC 	= 0
+     	and BMD 	= 0
+     	and DST 	= 0
+     	and EDLM 	= 0
+     	and TRA 	= 0 ";
+     
+     }
+     
+      
+     
 	$request_ogspy_universe_inactif = "SELECT coordinates, max(datere),energie, M, C, D, lower(player) , metal , cristal , deuterium 
 										FROM ".TABLE_PARSEDSPY.", ".TABLE_UNIVERSE."
 										where `coordinates`=CONCAT(`galaxy`,':',`system`,':',`row`)
 										and (status = 'i') and galaxy <= ".$value["g_max"]." and galaxy >= ".$value["g_min"]."  and system >= ".$value["s_min"]."  and system <= ".$value["s_max"]." 
                                         and dateRE > ".since($value["since"])."
 										and M > 1
+										".$sub_request." 
 										group by coordinates";
 
 				
@@ -61,7 +89,7 @@
 	}
 	//---------------------------------------
 
-	  echo $value["html"];
+	echo $value["html"];
 	echo "<table style=\"background-color: rgba(0,0,0,0.8);\" cellpudding=0 cellspacing=0 border=1>";
 	$link ="index.php?action=".ACTION."&subaction=analyseMI&since=".$value["since"]."&g_max=".$value["g_max"]."&g_min=".$value["g_min"]."&s_max=".$value["s_max"]."&s_min=".$value["s_min"]."";
 
@@ -101,5 +129,8 @@
 		}
 	}
 	echo "</table>";
-	
+	var_dump($pub_notdef);
 ?>
+
+
+
