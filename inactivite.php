@@ -101,7 +101,7 @@
 	$request_inactivite = "select inactivite_id, inactivite_nom, inactivite_date from `$nom_table` order by inactivite_date desc LIMIT 150;";
 	$result_inactivite = $db->sql_query($request_inactivite);
 	$ttttttttt = time();	
-	echo "<table cellpudding=0 cellspacing=0 border=1>";
+	echo "<table style=\"background-color: rgba(0,0,0,0.8);\" cellpudding=0 cellspacing=0 border=1>";
 	echo "<th>Nom</th>";
 	if(UNITROUVE) echo "<th>War riders</th>";
 	echo "<th>G&eacute;n&eacute;ral rank</th><th>G&eacute;n&eacute;ral point</th><th>Militaire rank</th><th>Militaire point</th><th>Date</th><th>nb jours ".help("inactif_nbjours")."</th>";

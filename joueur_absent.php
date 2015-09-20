@@ -122,7 +122,7 @@
 	$link ="index.php?action=".ACTION."&subaction=joueur_absent&order_by=$order_by&sens=$sens";
 
 	//en reglant à 0 ou 1 ce mod s apparente à un top flop journalier";
-	echo "<table cellpudding=0 cellspacing=0 border=1>";
+	echo "<table style=\"background-color: rgba(0,0,0,0.8);\" cellpudding=0 cellspacing=0 border=1>";
 	echo "<tr><td>".help("joueur_absent_nbjours")." Choix du nombre de jours : </td>";
 		for($i=0; $i<11; $i++)
 		{
