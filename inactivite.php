@@ -16,7 +16,7 @@
 	$result_ogspy_universe = $db->sql_query($request_ogspy_universe);
 	while(list($inactivite_nom)=$db->sql_fetch_row($result_ogspy_universe)){
 		$request = "DELETE FROM $nom_table WHERE inactivite_nom = '$inactivite_nom'";
-		$resultat = mysql_query($request);
+		$resultat = $db->sql_query($request);
 	}
 	
 	//etape 2 suppression des joueurs qui ne sont plus inactif ou qui sont en mv
@@ -68,7 +68,7 @@
 				//si joueur n'est pas dans la table inactivite, on l'insere
 				$request = "select count(distinct inactivite_nom) from $nom_table where inactivite_nom = '$nom_temp';";
 				$result = $db->sql_query($request);
-				list($nb) = mysql_fetch_row( $result );
+				list($nb) = $db->sql_fetch_row( $result );
 				if($nb == 0)
 				{
 					if($date == 0)
@@ -79,7 +79,7 @@
 					{
 						$request = "INSERT INTO $nom_table ( inactivite_nom, inactivite_date ) VALUES ('$nom_temp', '$date')";
 					}
-					$resultat = mysql_query($request);
+					$resultat = $db->sql_query($request);
 				}
 			}
 			$nom_temp = $player;
