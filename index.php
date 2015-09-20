@@ -58,20 +58,7 @@
     $retour .= '</tr>';
     $retour .= '<th>Non scann&eacute; depuis</th>';
     $retour .= '<th><input name="since" type="text" maxlength="3" size="3" value="'.$since.'"> jour(s)</th>';
-    if ($pub_subaction=="analyseMI")
-    {
-     $retour .= "<th>Sans d&eacute;fense</th><th><input type=\"checkbox\" ";
-     if (isset($_POST['notdef']) || isset($_GET['notdef']))
-     {
-     	$retour .= " checked ";
-     }
-   	 $retour .= " name=\"notdef\" value=\"notdef\"></th> ";
-    }
-    else
-    {
-    	    $retour .= '<th> </th><th> </th>';
-    }
-
+    $retour .= '<th> </th><th> </th>';
     $retour .= '</tr>';
     $retour .= '';
     $retour .= '<tr><th colspan="4"><input type="submit" value="Chercher"></th>		</tr></tbody></form></table><br />';
