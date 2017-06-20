@@ -13,14 +13,131 @@
      
 
      	$sub_request = " , 
-     	( LM + LLE + LLO+ CG+ AI+ LP+ GT+ PT+ CLE+ CLO+ CR+ VB+ VC+ REC+ BMD+ DST+ EDLM+ TRA) AS totaldef      	";
-
-      
+     	CASE 
+			WHEN LM < 0
+			THEN 0
+			ELSE LM*2000
+		END
+		+
+		CASE
+		 	WHEN LLE <0
+			THEN 0
+			ELSE LLE*2000
+		END
+		+
+		CASE
+			WHEN LLO <0
+			THEN 0
+			ELSE LLO*8000
+		END
+		+
+		CASE
+			WHEN CG <0
+			THEN 0
+			ELSE CG*37000
+		END
+		+
+		CASE
+			WHEN AI<0
+			THEN 0
+			ELSE AI*8000
+		END
+		+
+		CASE
+			WHEN LP<0
+			THEN 0
+			ELSE LP*130000
+		END
+		+
+		CASE
+			WHEN GT <0
+			THEN 0
+			ELSE GT*6000
+		END
+		+
+		CASE
+			WHEN PT<0
+			THEN 0
+			ELSE PT*4000
+		END
+		+
+		CASE
+			WHEN CLE<0
+			THEN 0
+			ELSE CLE*4000
+		END
+		+
+		CASE
+			WHEN CLO<0
+			THEN 0
+			ELSE CLO*10000
+		END
+		+
+		CASE
+			WHEN CR<0
+			THEN 0
+			ELSE CR*29000
+		END	
+		+
+		CASE
+			WHEN VB<0
+			THEN 0
+			ELSE VB*60000
+		END		
+		+
+		CASE
+			WHEN VC<0
+			THEN 0
+			ELSE VC*40000
+		END
+		+
+		CASE
+			WHEN REC<0
+			THEN 0
+			ELSE REC*18000
+		END
+		+
+		CASE
+			WHEN BMD<0
+			THEN 0
+			ELSE BMD*90000
+		END
+		+
+		CASE
+			WHEN DST<0
+			THEN 0
+			ELSE DST*125000
+		END
+		+
+		CASE
+			WHEN EDLM<0
+			THEN 0
+			ELSE EDLM*10000000
+		END
+		+
+		CASE
+			WHEN TRA<0
+			THEN 0
+			ELSE TRA*85000
+		END
+		+
+		CASE
+			WHEN PB<= 0
+			THEN 0
+			ELSE PB*20000
+		END
+		+
+		CASE
+			WHEN GB<=0
+			THEN 0
+			ELSE GB*100000
+		END
+			AS totaldef      	";
      
 	$request_ogspy_universe_inactif = "SELECT coordinates, max(datere),energie, M, C, D, lower(player) , metal , cristal , deuterium 	".$sub_request." 
 										FROM ".TABLE_PARSEDSPY.", ".TABLE_UNIVERSE."
 										where `coordinates`=CONCAT(`galaxy`,':',`system`,':',`row`)
-										and (status = 'i') and galaxy <= ".$value["g_max"]." and galaxy >= ".$value["g_min"]."  and system >= ".$value["s_min"]."  and system <= ".$value["s_max"]." 
+										and (status = 'i') and (status <>'%v%') and galaxy <= ".$value["g_max"]." and galaxy >= ".$value["g_min"]."  and system >= ".$value["s_min"]."  and system <= ".$value["s_max"]." 
                                         and dateRE > ".since($value["since"])."
 										and M > 1
 									
@@ -41,7 +158,7 @@
 		$total = (int)($metal + $cristal + $deuterium);
 				
 		// nb pt de produit
-		$prod_pt = ($metal_heure+$cristal_heure+$deut_heure)*24/5000;
+		$prod_pt = ceil(($metal_heure+$cristal_heure+$deut_heure)*24/25000);
 		if(isset($server_config['xtense_universe'])) 
 		{
 			$prod_pt = $prod_pt * $server_config['speed_uni'];
@@ -79,7 +196,7 @@
 			  <th><a href='".$link."&order_by=2&sens=1'><img src='".$prefixe."images/asc.png'></a>  M  <a href='".$link."&order_by=2&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
 			  <th><a href='".$link."&order_by=3&sens=1'><img src='".$prefixe."images/asc.png'></a>  C  <a href='".$link."&order_by=3&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
 			  <th><a href='".$link."&order_by=4&sens=1'><img src='".$prefixe."images/asc.png'></a>  D  <a href='".$link."&order_by=4&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
-			  <th><a href='".$link."&order_by=5&sens=1'><img src='".$prefixe."images/asc.png'></a>  PT/jour ".help("analyseMI_pt")." <a href='".$link."&order_by=5&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
+			  <th><a href='".$link."&order_by=5&sens=1'><img src='".$prefixe."images/asc.png'></a>  GT/jour ".help("analyseMI_pt")." <a href='".$link."&order_by=5&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
 			  <th><a href='".$link."&order_by=6&sens=1'><img src='".$prefixe."images/asc.png'></a>  Metal  ".help("analyseMI_ress")." <a href='".$link."&order_by=6&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
 			  <th><a href='".$link."&order_by=7&sens=1'><img src='".$prefixe."images/asc.png'></a>  Cristal ".help("analyseMI_ress")." <a href='".$link."&order_by=7&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
 			  <th><a href='".$link."&order_by=8&sens=1'><img src='".$prefixe."images/asc.png'></a>  Deuterium  ".help("analyseMI_ress")." <a href='".$link."&order_by=8&sens=2'><img src='".$prefixe."images/desc.png'></a></th>
@@ -95,7 +212,7 @@
 				$coords = explode(':',$tabAlgo[1][$k]);
 				echo "<tr>";
 				echo "<td><a href='".SEARCH.$tabAlgo[0][$k]."&strict=on'>".$tabAlgo[0][$k]."</a></td>";
-				if(UNITROUVE)	echo "<td><a href='".WARRIDERS.$tabAlgo[0][$k]."'>".$tabAlgo[0][$k]."</a></td>";
+				if(UNITROUVE)	echo "<td><a target=\"_blank\" href='".WARRIDERS.$tabAlgo[0][$k]."'>".$tabAlgo[0][$k]."</a></td>";
 				//echo "<td><a href='index.php?action=show_reportspy&galaxy=".$coords[0]."&system=".$coords[1]."&row=".$coords[2]."'>".$tabAlgo[1][$k]."</a></td>";
 				echo "<td><a href=\"#\" onclick=\"window.open('index.php?action=show_reportspy&amp;galaxy=".$coords[0]."&amp;system=".$coords[1]."&amp;row=".$coords[2]."','_blank','width=640, height=480, toolbar=0, location=0, directories=0, status=0, scrollbars=1, resizable=1, copyhistory=0, menuBar=0');return(false)\">".$tabAlgo[1][$k]."</a></td>";
                 echo "<td style='text-align:center;'>".$tabAlgo[2][$k]."</td>";
