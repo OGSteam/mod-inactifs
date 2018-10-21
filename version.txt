@@ -1,4 +1,4 @@
 Analyse Inactifs
-1.0.10
+1.1.0
 Analyse Inactifs,Analyse Inactifs,inactifs,inactifs,index.php,1,0
 3.3.2
