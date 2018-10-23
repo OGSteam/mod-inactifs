@@ -11,4 +11,3 @@ $help["analyseMI_unitdef"] = "Unités de d&eacute;fense";
 
 
 
-?>

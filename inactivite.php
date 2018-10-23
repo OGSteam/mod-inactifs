@@ -104,7 +104,7 @@
 	echo "<table style=\"background-color: rgba(0,0,0,0.8);\" cellpudding=0 cellspacing=0 border=1>";
 	echo "<th>Nom</th>";
 	if(UNITROUVE) echo "<th>War riders</th>";
-	echo "<th>G&eacute;n&eacute;ral rank</th><th>G&eacute;n&eacute;ral point</th><th>Militaire rank</th><th>Militaire point</th><th>Date</th><th>nb jours ".help("inactif_nbjours")."</th>";
+	echo "<th>Général rank</th><th>Général point</th><th>Militaire rank</th><th>Militaire point</th><th>Date</th><th>nb jours ".help("inactif_nbjours")."</th>";
 	while(list($index,$nom, $date_inactivite)=$db->sql_fetch_row($result_inactivite)){
 		$trouve = False;
 		$ligne = "<tr><td><a href='".SEARCH.$nom."&strict=on'>$nom</a></td>";
@@ -131,4 +131,3 @@
 	}
 	echo "</table>"; 
 
-?>

@@ -16,4 +16,3 @@ $mod_folder = "inactifs";
 $mod_name = "Analyse Inactifs";
 update_mod($mod_folder, $mod_name);
 
-?>

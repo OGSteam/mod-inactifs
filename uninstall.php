@@ -16,4 +16,3 @@ $mod_uninstall_name = "Analyse Inactifs";
 $mod_uninstall_table = $table_prefix."inactivite";
 uninstall_mod ($mod_uninstall_name, $mod_uninstall_table);
 
-?>

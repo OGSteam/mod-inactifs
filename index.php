@@ -173,4 +173,3 @@
 	
 	page_footer();
 	require_once("views/page_tail.php");
-?>
